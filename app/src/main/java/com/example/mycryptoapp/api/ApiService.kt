@@ -8,6 +8,7 @@ import retrofit2.http.Query
 
 interface ApiService {
 
+    //НЕ НАЧИНАТЬ С СИМВОЛА "/"
     @GET("top/totalvolfull")
     fun getTopCoinsInfo(
         @Query(QUERY_PARAM_API_KEY) apiKey: String = "",
