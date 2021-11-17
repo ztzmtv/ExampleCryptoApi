@@ -17,6 +17,7 @@ data class CoinPriceInfo(
     @Expose
     val market: String?,
 
+    //не нуллабельное!!!
     @PrimaryKey
     @SerializedName("FROMSYMBOL")
     @Expose
