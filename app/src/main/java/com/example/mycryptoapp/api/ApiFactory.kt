@@ -10,6 +10,7 @@ object ApiFactory {
     private const val BASE_URL = "https://min-api.cryptocompare.com/data/"
     private val logging = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
     private val httpClient = OkHttpClient.Builder().addInterceptor(logging)
+    const val BASE_IMAGE_URL = "https://cryptocompare.com"
 
     private val retrofit = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
