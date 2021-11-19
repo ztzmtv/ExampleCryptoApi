@@ -1,5 +1,6 @@
 package com.example.mycryptoapp.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,13 +12,15 @@ import com.example.mycryptoapp.pojo.CoinPriceInfo
 import com.squareup.picasso.Picasso
 
 
-class CoinInfoAdapter : RecyclerView.Adapter<CoinInfoAdapter.CoinInfoViewHolder>() {
+class CoinInfoAdapter(private val context: Context) :
+    RecyclerView.Adapter<CoinInfoAdapter.CoinInfoViewHolder>() {
 
     var coinInfoList: List<CoinPriceInfo> = listOf()
         set(value) {
             field = value
             notifyDataSetChanged()
         }
+    var onCoinClickListener: OnCoinClickListener? = null
 
     inner class CoinInfoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val ivLogoCoin: ImageView = itemView.findViewById<ImageView>(R.id.ivLogoCoin)
@@ -37,14 +40,24 @@ class CoinInfoAdapter : RecyclerView.Adapter<CoinInfoAdapter.CoinInfoViewHolder>
         val coin = coinInfoList[position]
         with(holder) {
             with(coin) {
-                tvSymbols.text = fromsymbol + " / " + coin.tosymbol
+                val symbolsTemplate = context.resources.getString(R.string.symbols_template)
+                val last_update_template =
+                    context.resources.getString(R.string.last_update_template)
+                tvSymbols.text = String.format(symbolsTemplate, fromsymbol, tosymbol)
                 tvPrice.text = price.toString()
-                tvLastUpdate.text = getFormattedTime()
+                tvLastUpdate.text = String.format(last_update_template, getFormattedTime())
                 Picasso.get().load(coin.getFullImageUrl()).into(holder.ivLogoCoin)
+                holder.itemView.setOnClickListener {
+                    onCoinClickListener?.onCoinClick(this)
+                }
             }
-        }
 
+        }
     }
 
     override fun getItemCount(): Int = coinInfoList.size
+
+    interface OnCoinClickListener {
+        fun onCoinClick(coinPriceInfo: CoinPriceInfo)
+    }
 }
