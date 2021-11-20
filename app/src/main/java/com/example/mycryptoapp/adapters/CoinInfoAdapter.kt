@@ -20,19 +20,23 @@ class CoinInfoAdapter(private val context: Context) :
             field = value
             notifyDataSetChanged()
         }
-    var onCoinClickListener: OnCoinClickListener? = null
+
 
     inner class CoinInfoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val ivLogoCoin: ImageView = itemView.findViewById<ImageView>(R.id.ivLogoCoin)
         val tvSymbols: TextView = itemView.findViewById<TextView>(R.id.tvSymbols)
         val tvPrice: TextView = itemView.findViewById<TextView>(R.id.tvPrice)
-        val tvLastUpdate: TextView = itemView.findViewById<TextView>(R.id.tvLastUpdate)
+        val tvLastUpdate: TextView = itemView.findViewById<TextView>(R.id.tvLastUpdateTime)
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoinInfoViewHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_coin_info, parent, false)
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.item_coin_info,
+                parent,
+                false
+            )
         return CoinInfoViewHolder(view)
     }
 
@@ -60,4 +64,7 @@ class CoinInfoAdapter(private val context: Context) :
     interface OnCoinClickListener {
         fun onCoinClick(coinPriceInfo: CoinPriceInfo)
     }
+
+    var onCoinClickListener: OnCoinClickListener? = null
+
 }
