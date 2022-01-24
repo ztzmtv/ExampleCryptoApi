@@ -27,12 +27,13 @@ class CoinViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             loadDataUseCase()
         }
-     log("init - done")
+        log("init - done")
     }
-    companion object{
+
+    companion object {
         private const val TAG = "CoinViewModel_TAG"
 
-        private fun log(string: String){
+        private fun log(string: String) {
             Log.d(TAG, string)
         }
     }
