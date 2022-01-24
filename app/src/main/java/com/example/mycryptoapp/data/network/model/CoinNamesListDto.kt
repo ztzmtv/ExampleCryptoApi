@@ -1,11 +1,10 @@
-package com.example.mycryptoapp.pojo
+package com.example.mycryptoapp.data.network.model
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import retrofit2.Call
 
-data class CoinInfoListOfData(
+data class CoinNamesListDto(
     @SerializedName("Data")
     @Expose
-    val data: List<Datum?>
+    val names: List<CoinNameContainerDto>?=null
 )

@@ -1,14 +1,14 @@
-package com.example.mycryptoapp.pojo
+package com.example.mycryptoapp.data.network.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.mycryptoapp.api.ApiFactory.BASE_IMAGE_URL
+import com.example.mycryptoapp.data.network.ApiFactory.BASE_IMAGE_URL
 import com.example.mycryptoapp.utils.convertTimestampToTime
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "full_price_list")
-data class CoinPriceInfo(
+data class CoinInfoDto(
     @SerializedName("TYPE")
     @Expose
     val type: String?,
