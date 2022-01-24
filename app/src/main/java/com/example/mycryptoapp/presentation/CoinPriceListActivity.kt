@@ -4,24 +4,24 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
-import com.example.mycryptoapp.R
+import com.example.mycryptoapp.databinding.ActivityCoinPriceListBinding
 import com.example.mycryptoapp.domain.CoinInfo
 import com.example.mycryptoapp.presentation.adapters.CoinInfoAdapter
 
 class CoinPriceListActivity : AppCompatActivity() {
 
+    private val binding by lazy {
+        ActivityCoinPriceListBinding.inflate(layoutInflater)
+    }
     private val viewModel by lazy {
         ViewModelProvider(this)[CoinViewModel::class.java]
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_coin_price_list)
+        setContentView(binding.root)
         log("onCreate")
 
-
-        val rvCoinPriceList = findViewById<RecyclerView>(R.id.rvCoinPriceList)
         val adapter = CoinInfoAdapter(this)
         adapter.onCoinClickListener = object : CoinInfoAdapter.OnCoinClickListener {
             override fun onCoinClick(coinPriceInfo: CoinInfo) {
@@ -32,7 +32,7 @@ class CoinPriceListActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }
-        rvCoinPriceList.adapter = adapter
+        binding.rvCoinPriceList.adapter = adapter
 
         viewModel.coinInfoList.observe(this) {
             adapter.coinInfoList = it
@@ -40,10 +40,10 @@ class CoinPriceListActivity : AppCompatActivity() {
         log("onCreate - done")
     }
 
-    companion object{
+    companion object {
         private const val TAG = "CoinPriceListAct_TAG"
 
-        private fun log(string: String){
+        private fun log(string: String) {
             Log.d(TAG, string)
         }
     }
