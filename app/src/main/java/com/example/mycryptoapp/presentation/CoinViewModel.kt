@@ -3,12 +3,10 @@ package com.example.mycryptoapp.presentation
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.mycryptoapp.data.repository.CoinRepositoryImpl
 import com.example.mycryptoapp.domain.GetCoinInfoListUseCase
 import com.example.mycryptoapp.domain.GetCoinInfoUseCase
 import com.example.mycryptoapp.domain.LoadDataUseCase
-import kotlinx.coroutines.launch
 
 class CoinViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -24,9 +22,7 @@ class CoinViewModel(application: Application) : AndroidViewModel(application) {
 
     init {
         log("init")
-        viewModelScope.launch {
-            loadDataUseCase()
-        }
+        loadDataUseCase()
         log("init - done")
     }
 

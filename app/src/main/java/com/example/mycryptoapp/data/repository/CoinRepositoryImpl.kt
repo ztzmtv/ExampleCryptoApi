@@ -4,12 +4,14 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
+import androidx.work.ExistingWorkPolicy
+import androidx.work.WorkManager
 import com.example.mycryptoapp.data.database.AppDatabase
 import com.example.mycryptoapp.data.mapper.CoinMapper
 import com.example.mycryptoapp.data.network.ApiFactory
+import com.example.mycryptoapp.data.workers.RefreshDataWorker
 import com.example.mycryptoapp.domain.CoinInfo
 import com.example.mycryptoapp.domain.CoinRepository
-import kotlinx.coroutines.delay
 
 class CoinRepositoryImpl(
     private val application: Application
@@ -35,35 +37,19 @@ class CoinRepositoryImpl(
         }
     }
 
-    override suspend fun loadData() {
-        while (true) {
-            try {
-                val topCoins =
-                    apiService.getTopCoinsInfo(limit = 50)
-                log(topCoins.toString())// загружаем список 50 валют
-                val fSym =
-                    mapper.mapNamesListToString(topCoins) // преобразуем в строку через запятую
-                log(fSym.toString())
-                val jsonContainer =
-                    apiService.getFullPriceList(fSyms = fSym) // получаем полный прайслист из сети
-                log(jsonContainer.toString())
-                val coinInfoDtoList =
-                    mapper.mapJsonContainerToListCoinInfo(jsonContainer) // json -> Dto
-                log(coinInfoDtoList.toString())
-                val dbModelList =
-                    coinInfoDtoList.map { mapper.mapDtoToDbModel(it) } // Dto -> DbModel
-                log(dbModelList.toString())
-                coinInfoDao.insertPriceList(dbModelList) // передаем в БД}
-
-            } catch (e: Exception) {
-            }
-            delay(10000)
-        }
+    override fun loadData() {
+        val workManager = WorkManager.getInstance(application)
+        workManager.enqueueUniqueWork(
+            RefreshDataWorker.NAME,
+            ExistingWorkPolicy.REPLACE,
+            RefreshDataWorker.makeRequest()
+        )
     }
-    companion object{
+
+    companion object {
         private const val TAG = "CoinRepoImpl_TAG"
 
-        private fun log(string: String){
+        private fun log(string: String) {
             Log.d(TAG, string)
         }
     }

@@ -52,6 +52,7 @@ class CoinPriceListActivity : AppCompatActivity() {
     }
 
     private fun launchDetailFragment(fromSymbol: String) {
+        supportFragmentManager.popBackStack()
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.fragment_container, CoinDetailFragment.newInstance(fromSymbol))
