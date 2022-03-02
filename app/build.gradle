@@ -38,6 +38,9 @@ android {
 }
 
 dependencies {
+
+    implementation "androidx.startup:startup-runtime:1.1.1"
+
     implementation 'com.google.dagger:dagger:2.40.5'
     kapt 'com.google.dagger:dagger-compiler:2.40.5'
 

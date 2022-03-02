@@ -1,10 +1,7 @@
 package com.example.mycryptoapp.presentation
 
-import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
-import com.example.mycryptoapp.data.repository.CoinRepositoryImpl
 import com.example.mycryptoapp.domain.GetCoinInfoListUseCase
 import com.example.mycryptoapp.domain.GetCoinInfoUseCase
 import com.example.mycryptoapp.domain.LoadDataUseCase
