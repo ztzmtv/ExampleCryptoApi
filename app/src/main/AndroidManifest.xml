@@ -29,9 +29,10 @@
         </activity>
         <provider
             android:name="androidx.startup.InitializationProvider"
-            android:authorities="androidx.work.impl.WorkManagerInitializer"
+            android:authorities="${applicationId}.androidx-startup"
+            tools:replace="android:authorities"
             tools:node="remove"
-            tools:replace="android:authorities" />
+            />
     </application>
 
 </manifest>
