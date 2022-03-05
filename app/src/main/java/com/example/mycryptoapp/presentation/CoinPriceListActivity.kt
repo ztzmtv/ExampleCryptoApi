@@ -19,9 +19,11 @@ class CoinPriceListActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityCoinPriceListBinding.inflate(layoutInflater)
     }
-    private val viewModel by lazy {
-        ViewModelProvider(this, viewModelFactory)[CoinViewModel::class.java]
-    }
+//    private val viewModel by lazy {
+//        ViewModelProvider(this, viewModelFactory)[CoinViewModel::class.java]
+//    }
+
+    private lateinit var viewModel: CoinViewModel
 
     private val component by lazy {
         (application as CoinApp).component
@@ -45,6 +47,7 @@ class CoinPriceListActivity : AppCompatActivity() {
         }
         binding.rvCoinPriceList.adapter = adapter
         binding.rvCoinPriceList.itemAnimator = null
+        viewModel = ViewModelProvider(this, viewModelFactory)[CoinViewModel::class.java]
         viewModel.coinInfoList.observe(this) {
             adapter.submitList(it)
         }

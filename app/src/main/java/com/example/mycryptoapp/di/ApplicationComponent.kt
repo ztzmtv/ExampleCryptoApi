@@ -19,7 +19,7 @@ interface ApplicationComponent {
 
     fun inject(activity: CoinPriceListActivity)
 
-    fun inject(activity: CoinDetailFragment)
+    fun inject(fragment: CoinDetailFragment)
 
     fun inject(application: CoinApp)
 
